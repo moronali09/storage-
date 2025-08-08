@@ -1,4 +1,16 @@
-const startTime = Date.now();
+// api/up.js
+
+// Get start time from ENV or fallback to now
+// Format: YYYY-MM-DD HH:mm:ss (24h)
+const startTimeStr = process.env.CUSTOM_START_TIME || 2025-07-28 10:00:00;
+
+function parseDateTime(str) {
+  const parts = str.split(/[- :]/).map(n => parseInt(n, 10));
+  // [YYYY, MM, DD, HH, mm, ss]
+  return new Date(parts[0], parts[1] - 1, parts[2], parts[3] || 0, parts[4] || 0, parts[5] || 0);
+}
+
+const startTime = startTimeStr ? parseDateTime(startTimeStr).getTime() : Date.now();
 
 function formatDuration(ms) {
   const totalSeconds = Math.floor(ms / 1000);
@@ -20,7 +32,8 @@ ________________________
 │ Hours   : ${hours}
 │ Minutes : ${minutes}
 │ Seconds : ${seconds}
-________________________`;
+________________________
+(started from: ${startTimeStr || "now"})`;
 
   res.status(200).send(text);
 }
