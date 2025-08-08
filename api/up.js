@@ -1,4 +1,3 @@
-instance restarts)
 const startTime = Date.now();
 
 function formatDuration(ms) {
