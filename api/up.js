@@ -1,8 +1,8 @@
 const startOffset = {
   days: parseInt(process.env.START_DAYS || "11"),
   hours: parseInt(process.env.START_HOURS || "9"),
-  minutes: parseInt(process.env.START_MINUTES || "42"),
-  seconds: parseInt(process.env.START_SECONDS || "9")
+  minutes: parseInt(process.env.START_MINUTES || "48"),
+  seconds: parseInt(process.env.START_SECONDS || "0"),
 };
 
 function getStartTime() {
@@ -17,6 +17,7 @@ function getStartTime() {
 export default function handler(req, res) {
   const startTime = getStartTime();
   const now = new Date();
+
   let diff = Math.floor((now - startTime) / 1000);
 
   const days = Math.floor(diff / (3600 * 24));
@@ -27,12 +28,7 @@ export default function handler(req, res) {
   const seconds = diff % 60;
 
   res.status(200).json({
-    server: process.env.SERVER_NAME || "My Server",
-    uptime: {
-      days,
-      hours,
-      minutes,
-      seconds
-    }
+    server: process.env.SERVER_NAME || "moronali-ELV",
+    uptime: { days, hours, minutes, seconds },
   });
 }
